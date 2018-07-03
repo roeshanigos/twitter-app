@@ -220,7 +220,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Tweet" id="i4b-v3-Rvb">
                             <connections>
-                                <action selector="tweetSent:" destination="XAI-Rp-hhr" id="JAz-7H-y0g"/>
+                                <action selector="tweetSent:" destination="XAI-Rp-hhr" id="OAK-aE-uHN"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

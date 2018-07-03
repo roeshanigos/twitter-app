@@ -34,7 +34,17 @@
 
 - (IBAction)tweetSent:(id)sender {
     NSString *text = self.twitterTextView.text;
-    [postStatusWithText];
+    [[APIManager shared]postStatusWithText:text completion:^(Tweet *tweet, NSError *error) {
+        if(error){
+            NSLog(@"Error composing Tweet: %@", error.localizedDescription);
+        }
+        else{
+            [self.delegate didTweet:tweet];
+            NSLog(@"Compose Tweet Success!");
+        }
+    }];
+    [self dismissViewControllerAnimated:true completion:nil];
+
 }
 
 
