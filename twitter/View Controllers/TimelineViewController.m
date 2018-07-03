@@ -8,8 +8,14 @@
 
 #import "TimelineViewController.h"
 #import "APIManager.h"
+#import "Tweet.h"
+#import "TweetCell.h"
+@interface TimelineViewController () <UITableViewDataSource, UITableViewDelegate>
 
-@interface TimelineViewController ()
+@property (strong, nonatomic) NSMutableArray *tweets;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic,strong) UIRefreshControl *refreshControl;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *refreshIndicator;
 
 @end
 
@@ -17,24 +23,74 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.dataSource = self;
+    self.tableView.dataSource = self;
     
-    // Get timeline
-    [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
-        if (tweets) {
-            NSLog(@"😎😎😎 Successfully loaded home timeline");
-            for (NSDictionary *dictionary in tweets) {
-                NSString *text = dictionary[@"text"];
-                NSLog(@"%@", text);
-            }
-        } else {
-            NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
-        }
-    }];
+    self.tableView.rowHeight = 150;
+    
+    //we have to initialize a mutable array
+    self.tweets = [[NSMutableArray alloc] init];
+    
+    //gets the function
+    [self fetchTweets];
+    
+    //ASK ABOUT THIS LOGIC
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(fetchTweets) forControlEvents:UIControlEventValueChanged];
+    [self.tableView insertSubview:self. refreshControl atIndex:0];
+    [self.tableView addSubview:self.refreshControl];
+    
+    
 }
 
+- (void)fetchTweets {
+    [self.refreshIndicator startAnimating];
+
+    // this is the twitter timeline
+    [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
+        [self.tweets removeAllObjects];
+        // runs this block to request the tweets
+        if (tweets) {
+            
+            NSLog(@"😎😎😎 Successfully loaded home timeline");
+            for (Tweet *tweet in tweets) {
+                NSString *text = tweet.text;
+                NSLog(@"%@", text);
+                //actually adding the tweets to the timeline below
+                [self.tweets addObject:tweet];
+            }
+            //telling tableView to reload since data is already fed
+            [self.tableView reloadData];
+        } else {
+            NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
+            [self.tableView reloadData];
+        }
+        [self.refreshIndicator stopAnimating];
+
+    }];
+    [self.refreshControl endRefreshing];
+    
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return self.tweets.count;
+}
+
+// Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
+// Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    //recycling and showing cells
+    TweetCell *tweetCell = [self.tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
+    
+    tweetCell.tweet = self.tweets[indexPath.row];
+
+    
+    return tweetCell;
+
 }
 
 /*
