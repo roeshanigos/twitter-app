@@ -55,24 +55,29 @@ static NSString * const consumerSecret = @"xRMNXzo12Sx1NiLOIAmiZvJh4LGYdwrdr2mgF
    parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray *  _Nullable tweetDictionaries) {
        NSMutableArray *tweets = [Tweet tweetsWithArray:tweetDictionaries];
        // Manually cache the tweets. If the request fails, restore from cache if possible.
+       //storing the tweet as tweet dictionary  (an array of tweets sepcified in method)
+       //saving the tweet ductionaries and ASK
        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:tweetDictionaries];
+       //ASK
        [[NSUserDefaults standardUserDefaults] setValue:data forKey:@"hometimeline_tweets"];
 
        completion(tweets, nil);
        
    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+       //when network call fails and set it to nil so it knows there is nothing in the array
+       NSMutableArray *tweets = nil;
        
-       NSArray *tweets = nil;
-       
-       // Fetch tweets from cache if possible
-       NSData *data = [[NSUserDefaults standardUserDefaults] valueForKey:@"hometimeline_tweets"];
-       if (data != nil) {
-           tweets = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+       // Fetch tweets from cache if possible (stored tweets)
+       NSData *storedData = [[NSUserDefaults standardUserDefaults] valueForKey:@"hometimeline_tweets"];
+       if (storedData != nil) {
+           //array of tweets
+           tweets = [Tweet tweetsWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:storedData]];
        }
-       
+     
        completion(tweets, error);
    }];
 }
+    
 
 - (void)postStatusWithText:(NSString *)text completion:(void (^)(Tweet *, NSError *))completion{
     NSString *urlString = @"1.1/statuses/update.json";
@@ -85,5 +90,41 @@ static NSString * const consumerSecret = @"xRMNXzo12Sx1NiLOIAmiZvJh4LGYdwrdr2mgF
         completion(nil, error);
     }];
 }
+
+//sends the info to twitter
+//sumbitting data to a database
+- (void)favorite:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion{
+    
+    //u can access url and add stuff to twitters API
+    NSString *urlString = @"1.1/favorites/create.json";
+    //this is the tweet >> favoriting retweet and getting its ID to atually fave it
+    NSDictionary *parameters = @{@"id": tweet.idStr};
+    //then updates the fave count
+    [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
+        //once it runs and updates .. gives me back the updated object
+        Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
+        completion(tweet, nil);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        completion(nil, error);
+    }];
+}
+
+
+- (void)unfavorite:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion{
+    
+    //u can access url and add stuff to twitters API
+    NSString *urlString = @"1.1/favorites/destroy.json";
+    //this is the tweet >> favoriting retweet and getting its ID to atually fave it
+    NSDictionary *parameters = @{@"id": tweet.idStr};
+    //then updates the fave count
+    [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
+        //once it runs and updates .. gives me back the updated object
+        Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
+        completion(tweet, nil);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        completion(nil, error);
+    }];
+}
+
 
 @end

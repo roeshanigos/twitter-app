@@ -9,6 +9,7 @@
 #import "TweetCell.h"
 #import "Tweet.h"
 #import "UIImageView+AFNetworking.h"
+#import "APIManager.h"
 
 
 @implementation TweetCell
@@ -37,5 +38,44 @@
     self.profileImage.image = nil;
     [self.profileImage setImageWithURL:tweet.user.proPicURL];
 }
+
+- (IBAction)didTapFavor:(id)sender {
+    if (self.tweet.favorited) {
+        self.tweet.favorited = NO;
+        self.tweet.favoriteCount -= 1;
+        
+        [[APIManager shared] unfavorite:self.tweet completion:^(Tweet *tweet, NSError *error) { 
+            if(error){
+                NSLog(@"Error favoriting tweet: %@", error.localizedDescription);
+            }
+            else{
+                NSLog(@"Successfully favorited the following Tweet: %@", tweet.text);
+            }
+        }];
+    }
+    else {
+    self.tweet.favorited = YES;
+    self.tweet.favoriteCount += 1;
+        
+        [[APIManager shared] favorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
+            if(error){
+                NSLog(@"Error favoriting tweet: %@", error.localizedDescription);
+            }
+            else{
+                NSLog(@"Successfully favorited the following Tweet: %@", tweet.text);
+            }
+        }];
+    }
+    [self refreshData];
+}
+
+-(void)refreshData {
+    self.retweetCountLabel.text = [NSString stringWithFormat:@"%d", self.tweet.retweetCount];
+    self.favCountLabel.text = [NSString stringWithFormat:@"%d", self.tweet.favoriteCount];
+    self.retweetCountLabel.text = [NSString stringWithFormat:@"%d", self.tweet.replyCount];
+
+}
+
+
 
 @end
