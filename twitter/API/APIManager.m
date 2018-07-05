@@ -109,7 +109,7 @@ static NSString * const consumerSecret = @"xRMNXzo12Sx1NiLOIAmiZvJh4LGYdwrdr2mgF
     }];
 }
 
-
+//ASK ABOUT BLOCK NOTATION
 - (void)unfavorite:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion{
     
     //u can access url and add stuff to twitters API
@@ -126,5 +126,37 @@ static NSString * const consumerSecret = @"xRMNXzo12Sx1NiLOIAmiZvJh4LGYdwrdr2mgF
     }];
 }
 
+
+- (void)retweet:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion{
+    
+    //u can access url and add stuff to twitters API
+    NSString *urlString = @"https://api.twitter.com/1.1/statuses/retweet.json";
+    //this is the tweet >> retweeting retweet and getting its ID to atually fave it
+    NSDictionary *parameters = @{@"id": tweet.idStr};
+    //then updates the retweet count
+    [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
+        //once it runs and updates .. gives me back the updated object
+        Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
+        completion(tweet, nil);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        completion(nil, error);
+    }];
+}
+
+- (void)unretweet:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion{
+    
+    //u can access url and add stuff to twitters API
+    NSString *urlString =@"https://api.twitter.com/1.1/statuses/unretweet.json";
+    //this is the tweet >> unretweeting retweet and getting its ID to atually fave it
+    NSDictionary *parameters = @{@"id": tweet.idStr};
+    //then updates the fave count
+    [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
+        //once it runs and updates .. gives me back the updated object
+        Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
+        completion(tweet, nil);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        completion(nil, error);
+    }];
+}
 
 @end
