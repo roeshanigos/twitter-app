@@ -11,6 +11,8 @@
 #import "Tweet.h"
 #import "TweetCell.h"
 #import "ComposeViewController.h"
+#import "LoginViewController.h"
+#import "AppDelegate.h"
 
 @interface TimelineViewController () <ComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -29,7 +31,7 @@
     self.tableView.dataSource = self;
     self.tableView.dataSource = self;
     
-    self.tableView.rowHeight = 150;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     //we have to initialize a mutable array
     self.tweets = [[NSMutableArray alloc] init];
@@ -114,6 +116,16 @@
     composeController.delegate = self;
 }
 
+- (IBAction)didTapLogout:(id)sender {
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    appDelegate.window.rootViewController = loginViewController;
+    
+    [[APIManager shared] logout];
+    
+}
 
 
 @end

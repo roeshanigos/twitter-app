@@ -130,7 +130,7 @@ static NSString * const consumerSecret = @"xRMNXzo12Sx1NiLOIAmiZvJh4LGYdwrdr2mgF
 - (void)retweet:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion{
     
     //u can access url and add stuff to twitters API
-    NSString *urlString = @"https://api.twitter.com/1.1/statuses/retweet.json";
+    NSString *urlString = @"1.1/statuses/retweet.json";
     //this is the tweet >> retweeting retweet and getting its ID to atually fave it
     NSDictionary *parameters = @{@"id": tweet.idStr};
     //then updates the retweet count
@@ -146,7 +146,7 @@ static NSString * const consumerSecret = @"xRMNXzo12Sx1NiLOIAmiZvJh4LGYdwrdr2mgF
 - (void)unretweet:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion{
     
     //u can access url and add stuff to twitters API
-    NSString *urlString =@"https://api.twitter.com/1.1/statuses/unretweet.json";
+    NSString *urlString =@"1.1/statuses/unretweet.json";
     //this is the tweet >> unretweeting retweet and getting its ID to atually fave it
     NSDictionary *parameters = @{@"id": tweet.idStr};
     //then updates the fave count

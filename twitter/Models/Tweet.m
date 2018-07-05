@@ -8,9 +8,9 @@
 
 #import "Tweet.h"
 #import "User.h"
+#import <DateTools/NSDate+DateTools.h>
 
 @implementation Tweet
-
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
@@ -39,21 +39,29 @@
         
         // Format createdAt date string
         NSString *createdAtOriginalString = dictionary[@"created_at"];
+        
         //initializing a formatter
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         // Configure the input format to parse the date string
         formatter.dateFormat = @"E MMM d HH:mm:ss Z y";
         // Convert String to Date
-        NSDate *date = [formatter dateFromString:createdAtOriginalString];
-        // Configure output format
-        formatter.dateStyle = NSDateFormatterShortStyle;
-        formatter.timeStyle = NSDateFormatterNoStyle;
+        NSDate *createdDate = [formatter dateFromString:createdAtOriginalString];
+        NSTimeInterval secondsBetween = [[NSDate date] timeIntervalSinceDate:createdDate];
+        
         // Convert Date to String
-        self.createdAtString = [formatter stringFromDate:date];
+        
+        if (secondsBetween <= 36000 ){
+        self.createdAtString = createdDate.shortTimeAgoSinceNow;
+    }
+        else {
+            // Configure output format
+            formatter.dateStyle = NSDateFormatterShortStyle;
+            formatter.timeStyle = NSDateFormatterNoStyle;
+            self.createdAtString = [formatter stringFromDate:createdDate];
+        }
     }
     return self;
 }
-
 
 //output an array of tweets
 + (NSMutableArray *)tweetsWithArray:(NSArray *)dictionaries{
