@@ -18,9 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *retweetCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *favCountLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
-
 @property (strong, nonatomic)  Tweet *tweet;
-
 -(void) setTweet:(Tweet *)tweet;
 
 

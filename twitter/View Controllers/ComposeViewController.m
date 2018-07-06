@@ -9,6 +9,8 @@
 #import "ComposeViewController.h"
 #import "APIManager.h"
 
+
+
 @interface ComposeViewController ()
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeButton;
@@ -22,6 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,6 +48,7 @@
     }];
     [self dismissViewControllerAnimated:true completion:nil];
 }
+ 
 
 
 /*

@@ -38,6 +38,10 @@
     self.replyCountLabel.text = [NSString stringWithFormat:@"%d", tweet.replyCount];
     self.profileImage.image = nil;
     [self.profileImage setImageWithURL:tweet.user.proPicURL];
+    self.profileImage.layer.cornerRadius = self.profileImage.frame.size.height/2;
+
+    
+    
 }
 
 - (IBAction)didTapFavor:(id)sender {

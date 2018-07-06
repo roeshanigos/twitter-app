@@ -17,23 +17,27 @@ PODS:
   - BDBOAuth1Manager (2.0.0):
     - AFNetworking/NSURLSession (~> 3.0.0)
   - DateTools (2.0.0)
+  - RSKPlaceholderTextView (3.0.0)
 
 DEPENDENCIES:
   - AFNetworking
   - BDBOAuth1Manager
   - DateTools
+  - RSKPlaceholderTextView
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
     - BDBOAuth1Manager
     - DateTools
+    - RSKPlaceholderTextView
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
   BDBOAuth1Manager: 92d17d06f8a648602962304cd2f35ae7394fa001
   DateTools: 933ac9c490f21f92127cf690ccd8c397e0126caf
+  RSKPlaceholderTextView: 0ce73a19998e236323b3f1f16bf4a4e4a76c2c28
 
-PODFILE CHECKSUM: a01562b42d6ea4d69e9f0d5557bdd30ba9a863d2
+PODFILE CHECKSUM: eb4c735d9ee6f6a9496b8a16b2fe86449cc2c92e
 
 COCOAPODS: 1.5.3

@@ -91,6 +91,28 @@ static NSString * const consumerSecret = @"xRMNXzo12Sx1NiLOIAmiZvJh4LGYdwrdr2mgF
     }];
 }
 
+- (void)getHomeWithTimeline:(NSNumber *)text completion:(void (^)(NSArray *, NSError *))completion{
+
+    NSDictionary *parameters = @{@"count": text};
+    [self GET:@"1.1/statuses/home_timeline.json"
+   parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray *  _Nullable tweetDictionaries) {
+       NSMutableArray *tweets = [Tweet tweetsWithArray:tweetDictionaries];
+       
+       completion(tweets, nil);
+       
+   } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+       //when network call fails and set it to nil so it knows there is nothing in the array
+       NSMutableArray *tweets = nil;
+       // Fetch tweets from cache if possible (stored tweets)
+       NSData *storedData = [[NSUserDefaults standardUserDefaults] valueForKey:@"hometimeline_tweets"];
+       if (storedData != nil) {
+           //array of tweets
+           tweets = [Tweet tweetsWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:storedData]];
+       }
+       completion(tweets, error);
+   }];
+}
+
 //sends the info to twitter
 //sumbitting data to a database
 - (void)favorite:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion{

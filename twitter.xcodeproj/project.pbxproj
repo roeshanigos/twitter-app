@@ -11,6 +11,8 @@
 		350C51A320EACFF500ACCE10 /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 350C51A220EACFF500ACCE10 /* Tweet.m */; };
 		350C51A620EADFA000ACCE10 /* TweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 350C51A520EADFA000ACCE10 /* TweetCell.m */; };
 		350C51A920EC291900ACCE10 /* ComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 350C51A820EC291900ACCE10 /* ComposeViewController.m */; };
+		35D8D52620EEE3DF00B5D12C /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D8D52520EEE3DF00B5D12C /* DetailsViewController.m */; };
+		35D8D56720F02C8800B5D12C /* InfiniteScrollActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D8D56620F02C8800B5D12C /* InfiniteScrollActivityView.m */; };
 		557D7B17F5D2B5715B705AA9 /* libPods-twitter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43D6142D6F34C1AE98EE4951 /* libPods-twitter.a */; };
 		6AD278DA20BC4B950085BC29 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AD278D920BC4B950085BC29 /* AppDelegate.m */; };
 		6AD278E020BC4B950085BC29 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AD278DE20BC4B950085BC29 /* Main.storyboard */; };
@@ -33,6 +35,10 @@
 		350C51A520EADFA000ACCE10 /* TweetCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TweetCell.m; sourceTree = "<group>"; };
 		350C51A720EC291900ACCE10 /* ComposeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComposeViewController.h; sourceTree = "<group>"; };
 		350C51A820EC291900ACCE10 /* ComposeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
+		35D8D52420EEE3DF00B5D12C /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
+		35D8D52520EEE3DF00B5D12C /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
+		35D8D56520F02C8800B5D12C /* InfiniteScrollActivityView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfiniteScrollActivityView.h; sourceTree = "<group>"; };
+		35D8D56620F02C8800B5D12C /* InfiniteScrollActivityView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfiniteScrollActivityView.m; sourceTree = "<group>"; };
 		43D6142D6F34C1AE98EE4951 /* libPods-twitter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-twitter.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AD278D520BC4B950085BC29 /* twitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = twitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AD278D820BC4B950085BC29 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -136,6 +142,8 @@
 			children = (
 				350C51A420EADFA000ACCE10 /* TweetCell.h */,
 				350C51A520EADFA000ACCE10 /* TweetCell.m */,
+				35D8D56520F02C8800B5D12C /* InfiniteScrollActivityView.h */,
+				35D8D56620F02C8800B5D12C /* InfiniteScrollActivityView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -149,6 +157,8 @@
 				6AD2790820BCC04D0085BC29 /* TimelineViewController.m */,
 				350C51A720EC291900ACCE10 /* ComposeViewController.h */,
 				350C51A820EC291900ACCE10 /* ComposeViewController.m */,
+				35D8D52420EEE3DF00B5D12C /* DetailsViewController.h */,
+				35D8D52520EEE3DF00B5D12C /* DetailsViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -275,7 +285,9 @@
 			files = (
 				350C51A620EADFA000ACCE10 /* TweetCell.m in Sources */,
 				6AD278F320BCA6020085BC29 /* BDBOAuth1SessionManager+SFAuthenticationSession.m in Sources */,
+				35D8D52620EEE3DF00B5D12C /* DetailsViewController.m in Sources */,
 				350C51A020EACCCF00ACCE10 /* User.m in Sources */,
+				35D8D56720F02C8800B5D12C /* InfiniteScrollActivityView.m in Sources */,
 				350C51A920EC291900ACCE10 /* ComposeViewController.m in Sources */,
 				6AD278E820BC4B970085BC29 /* main.m in Sources */,
 				350C51A320EACFF500ACCE10 /* Tweet.m in Sources */,

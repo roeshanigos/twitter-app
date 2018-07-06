@@ -12,15 +12,22 @@
 #import "TweetCell.h"
 #import "ComposeViewController.h"
 #import "LoginViewController.h"
+#import "DetailsViewController.h"
 #import "AppDelegate.h"
+#import "InfiniteScrollActivityView.h"
 
-@interface TimelineViewController () <ComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface TimelineViewController () <ComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
 
 @property (strong, nonatomic) NSMutableArray *tweets;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic,strong) UIRefreshControl *refreshControl;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *refreshIndicator;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *composeButton;
+@property (assign, nonatomic) BOOL isMoreDataLoading;
+@property (strong, nonatomic) InfiniteScrollActivityView* loadingMoreView;
+
+
 
 @end
 
@@ -29,7 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.dataSource = self;
-    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
     
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
@@ -45,7 +52,18 @@
     [self.tableView insertSubview:self. refreshControl atIndex:0];
     [self.tableView addSubview:self.refreshControl];
     
+    bool isMoreDataLoading = false;
+    InfiniteScrollActivityView* loadingMoreView;
     
+    CGRect frame = CGRectMake(0, self.tableView.contentSize.height, self.tableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight);
+    loadingMoreView = [[InfiniteScrollActivityView alloc] initWithFrame:frame];
+    loadingMoreView.hidden = true;
+    [self.tableView addSubview:loadingMoreView];
+    
+    UIEdgeInsets insets = self.tableView.contentInset;
+    insets.bottom += InfiniteScrollActivityView.defaultHeight;
+    self.tableView.contentInset = insets;
+
 }
 
 - (void)fetchTweets {
@@ -103,6 +121,7 @@
     [self.tweets addObject:tweet];
     [self.tableView reloadData];
 }
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -110,10 +129,22 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     
+    
     //EXPLAIN THIS (ASK FOR HELP)
-    UINavigationController *navigationController = [segue destinationViewController];
-    ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
-    composeController.delegate = self;
+    if ([segue.identifier isEqual:@"tweetCompose" ]) {
+        UINavigationController *navigationController = [segue destinationViewController];
+        //making a delegate
+        ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
+        composeController.delegate = self;
+    }
+    else {
+        UITableViewCell *tappedCell = sender;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
+        Tweet *tweet = self.tweets[indexPath.row];
+        DetailsViewController *detailsViewController = [segue destinationViewController];
+        detailsViewController.tweet = tweet;
+    }
+    
 }
 
 - (IBAction)didTapLogout:(id)sender {
@@ -125,6 +156,41 @@
     
     [[APIManager shared] logout];
     
+}
+
+
+-(void)getMoreData{
+    [[APIManager shared] getHomeWithTimeline:@200 completion:^(NSArray *tweets, NSError *error) {
+        if (tweets){
+            self.tweets = [NSMutableArray arrayWithArray: tweets];
+            [self.tableView reloadData];
+        }
+        else {
+            NSLog(@"oopsies");
+        }
+    }];
+
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if(!self.isMoreDataLoading){
+        // Calculate the position of one screen length before the bottom of the results
+        int scrollViewContentHeight = self.tableView.contentSize.height;
+        int scrollOffsetThreshold = scrollViewContentHeight - self.tableView.bounds.size.height;
+        
+        // When the user has scrolled past the threshold, start requesting
+        if(scrollView.contentOffset.y > scrollOffsetThreshold && self.tableView.isDragging) {
+            self.isMoreDataLoading = true;
+            
+            // Update position of loadingMoreView, and start loading indicator
+            //CGRect frame = CGRectMake(0, self.tableView.contentSize.height, self.tableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight);
+            //self.loadingMoreView.frame = frame;
+            //[self.loadingMoreView startAnimating];
+            
+            // Code to load more results
+            [self getMoreData];
+        }
+    }
 }
 
 
