@@ -52,7 +52,7 @@
     [self.refreshControl addTarget:self action:@selector(fetchTweets) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self. refreshControl atIndex:0];
     [self.tableView addSubview:self.refreshControl];
-    
+
     bool isMoreDataLoading = false;
     InfiniteScrollActivityView* loadingMoreView;
     
