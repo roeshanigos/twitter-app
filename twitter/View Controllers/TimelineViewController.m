@@ -15,6 +15,7 @@
 #import "DetailsViewController.h"
 #import "AppDelegate.h"
 #import "InfiniteScrollActivityView.h"
+#import "ProfileViewController.h"
 
 @interface TimelineViewController () <ComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
@@ -137,12 +138,20 @@
         ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
         composeController.delegate = self;
     }
-    else {
+    else if ([segue.identifier isEqual:@"detailTweet" ]){
         UITableViewCell *tappedCell = sender;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
         Tweet *tweet = self.tweets[indexPath.row];
         DetailsViewController *detailsViewController = [segue destinationViewController];
         detailsViewController.tweet = tweet;
+    }
+    else {
+        UIButton *tappedButton = sender;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedButton];
+        Tweet *tweet = self.tweets[indexPath.row];
+        ProfileViewController *profileViewController = [segue destinationViewController];
+        profileViewController.tweet = tweet;
+        
     }
     
 }

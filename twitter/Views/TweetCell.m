@@ -22,8 +22,9 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
+    
+    
 }
 
 -(void)setTweet:(Tweet *)tweet {
@@ -40,6 +41,7 @@
     [self.profileImage setImageWithURL:tweet.user.proPicURL];
     self.profileImage.layer.cornerRadius = self.profileImage.frame.size.height/2;
 
+    
     
     
 }
@@ -71,8 +73,11 @@
                 NSLog(@"Successfully favorited the following Tweet: %@", tweet.text);
             }
         }];
+        
+        self.likeButton.selected = self.tweet.favorited;
     }
     [self refreshData];
+   
 }
 
 
@@ -103,6 +108,7 @@
                 NSLog(@"Successfully retweeted the following Tweet: %@", tweet.text);
             }
         }];
+        self.retweetButton.selected = self.tweet.retweeted;
     }
     [self refreshData];
 }

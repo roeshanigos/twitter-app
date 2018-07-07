@@ -15,7 +15,10 @@
     if (self) {
         self.name = dictionary[@"name"];
         self.screenName = dictionary[@"screen_name"];
+        self.followerCount = [dictionary[@"follower_count"] intValue];
+        self.friendsCount = [dictionary[@"friends_count"] intValue];
         self.proPicURL = [NSURL URLWithString:dictionary[@"profile_image_url_https"]];
+        
     }
     return self;
 }

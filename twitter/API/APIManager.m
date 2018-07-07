@@ -91,13 +91,16 @@ static NSString * const consumerSecret = @"xRMNXzo12Sx1NiLOIAmiZvJh4LGYdwrdr2mgF
     }];
 }
 
-- (void)getHomeWithTimeline:(NSNumber *)text completion:(void (^)(NSArray *, NSError *))completion{
 
-    NSDictionary *parameters = @{@"count": text};
+
+- (void)getHomeWithTimeline:(NSNumber *)number completion:(void (^)(NSArray *, NSError *))completion{
+//how many tweets fetch (default was 20)
+    
+    //giving the number argument
+    NSDictionary *parameters = @{@"count": number};
     [self GET:@"1.1/statuses/home_timeline.json"
    parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray *  _Nullable tweetDictionaries) {
        NSMutableArray *tweets = [Tweet tweetsWithArray:tweetDictionaries];
-       
        completion(tweets, nil);
        
    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -113,8 +116,9 @@ static NSString * const consumerSecret = @"xRMNXzo12Sx1NiLOIAmiZvJh4LGYdwrdr2mgF
    }];
 }
 
-//sends the info to twitter
-//sumbitting data to a database
+
+
+//sends the info to twitter and sumbitting data to a database
 - (void)favorite:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion{
     
     //u can access url and add stuff to twitters API
@@ -130,6 +134,8 @@ static NSString * const consumerSecret = @"xRMNXzo12Sx1NiLOIAmiZvJh4LGYdwrdr2mgF
         completion(nil, error);
     }];
 }
+
+
 
 //ASK ABOUT BLOCK NOTATION
 - (void)unfavorite:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion{
@@ -149,6 +155,7 @@ static NSString * const consumerSecret = @"xRMNXzo12Sx1NiLOIAmiZvJh4LGYdwrdr2mgF
 }
 
 
+
 - (void)retweet:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion{
     
     //u can access url and add stuff to twitters API
@@ -164,6 +171,8 @@ static NSString * const consumerSecret = @"xRMNXzo12Sx1NiLOIAmiZvJh4LGYdwrdr2mgF
         completion(nil, error);
     }];
 }
+
+
 
 - (void)unretweet:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion{
     

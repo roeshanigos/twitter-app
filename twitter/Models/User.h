@@ -13,6 +13,8 @@
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *screenName;
 @property (strong, nonatomic) NSURL *proPicURL;
+@property  NSInteger *followerCount;
+@property  NSInteger *friendsCount;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @end
