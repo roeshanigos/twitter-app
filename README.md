@@ -58,10 +58,15 @@ Please list two areas of the assignment you'd like to **discuss further with you
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
-
-<img src='https://i.imgur.com/7nAbN9G.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+- this is showing the app icon
 <img src='https://i.imgur.com/YL3M4zn.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+ -launch screen, log in and log out 
+<img src='https://i.imgur.com/7nAbN9G.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+- composing tweets and liking and retweeting, refreshing
+<img src='https://i.imgur.com/YL3M4zn.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+- showing detailed view and profile view (will fix the retweet and favorite button to unselect)
 <img src='https://i.imgur.com/CeIckbE.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+- showing auto layout do its magic
 <img src='https://i.imgur.com/y3wUgfb.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
