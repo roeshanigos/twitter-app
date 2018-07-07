@@ -7,7 +7,7 @@ The starter project can be found in the `starter-project` tag. Download and run 
 
 **Twitter Mock App** is a basic twitter app to read and compose tweets the [Twitter API](https://apps.twitter.com/).
 
-Time spent: **** hours spent in total
+Time spent: **22** hours spent in total
 
 ## User Stories
 
